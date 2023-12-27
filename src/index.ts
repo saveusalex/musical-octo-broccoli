@@ -1,9 +1,15 @@
 import express from "express";
+import dotenv from 'dotenv';
+dotenv.config();
 
 import Logger from "./lib/logger";
+import { defaultRoute } from "./routes/defaultRoute";
+
 
 const app = express();
-const PORT = 3000;
+
+// routes
+app.use('/', defaultRoute);
 
 app.get("/logger", (_, res) => {
   Logger.error("This is an error log");
@@ -15,6 +21,6 @@ app.get("/logger", (_, res) => {
   res.send("Hello world");
 });
 
-app.listen(PORT, () => {
-  Logger.debug(`Server is up and running @ http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+  Logger.debug(`Server is up and running @ http://localhost:${process.env.PORT}`);
 });
